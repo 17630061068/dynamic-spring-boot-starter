@@ -13,8 +13,7 @@ import java.util.Collections;
  * @Version 1.0.0
  **/
 public class CodeGenerator {
-//    private static String url = "jdbc:mysql://121.40.49.80:3306/ihrm?useUnicode=true&useSSL=false&characterEncoding=utf8";
-    private static String url = "jdbc:mysql://121.40.49.80:3306/bugstack?useUnicode=true&useSSL=false&characterEncoding=utf8";
+    private static String url = "jdbc:mysql://127.0.0.1:3306/test01?useUnicode=true&useSSL=false&characterEncoding=utf8";
     private static String username = "root";
     private static String password = "123456";
     private static String tableName = "user";
