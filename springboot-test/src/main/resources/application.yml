@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    dynamic:
+      datasource:
+        one:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: root
+          password: 123456
+          url: jdbc:mysql://121.40.49.80:3306/ihrm?useUnicode=true&useSSL=false&characterEncoding=utf8
+        second:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          username: root
+          password: 123456
+          url: jdbc:mysql://121.40.49.80:3306/bugstack?useUnicode=true&useSSL=false&characterEncoding=utf8
+      druid:
+        initialSize: 10
+        maxActive: 50
+        minIdle: 5
+        maxWait: 60
+        minEvictableIdleTimeMillis: 30000
+        maxEvictableIdleTimeMillis: 30000
+      primary: one
+      type: com.alibaba.druid.pool.DruidDataSource
+mybatis-plus:
+  mapper-locations: /mapper/*.xml
