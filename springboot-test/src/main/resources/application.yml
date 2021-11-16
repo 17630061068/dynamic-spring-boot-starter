@@ -6,12 +6,12 @@ spring:
           driver-class-name: com.mysql.cj.jdbc.Driver
           username: root
           password: 123456
-          url: jdbc:mysql://121.40.49.80:3306/ihrm?useUnicode=true&useSSL=false&characterEncoding=utf8
+          url: jdbc:mysql://127.0.0.1:3306/test01?useUnicode=true&useSSL=false&characterEncoding=utf8
         second:
           driver-class-name: com.mysql.cj.jdbc.Driver
           username: root
           password: 123456
-          url: jdbc:mysql://121.40.49.80:3306/bugstack?useUnicode=true&useSSL=false&characterEncoding=utf8
+          url: jdbc:mysql://127.0.0.1:3306/test02?useUnicode=true&useSSL=false&characterEncoding=utf8
       druid:
         initialSize: 10
         maxActive: 50
