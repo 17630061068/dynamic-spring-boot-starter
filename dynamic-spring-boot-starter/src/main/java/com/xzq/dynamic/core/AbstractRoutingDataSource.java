@@ -1,5 +1,8 @@
 package com.xzq.dynamic.core;
 
+import com.xzq.dynamic.tx.ConnectionFactory;
+import com.xzq.dynamic.tx.ConnectionProxy;
+import com.xzq.dynamic.tx.TransactionalContext;
 import lombok.Data;
 import org.springframework.jdbc.datasource.AbstractDataSource;
 import org.springframework.util.StringUtils;
@@ -24,7 +27,22 @@ public abstract class AbstractRoutingDataSource extends AbstractDataSource {
 
     @Override
     public Connection getConnection() throws SQLException {
-      return   determineDataSource().getConnection();
+        String xid = TransactionalContext.getXID();
+        if (StringUtils.isEmpty(xid)) {
+            return   determineDataSource().getConnection();
+        }else{
+            //进行连接代理
+            String ds = DataSourceContextHolder.peek();
+            ds = StringUtils.isEmpty(ds) ? "default" : ds;
+            ConnectionProxy connection = ConnectionFactory.getConnection(ds);
+            return connection == null ? getConnectionProxy(ds, determineDataSource().getConnection()) : connection;
+        }
+    }
+
+    private Connection getConnectionProxy(String ds, Connection connection) {
+        ConnectionProxy connectionProxy = new ConnectionProxy(connection, ds);
+        ConnectionFactory.putConnection(ds, connectionProxy);
+        return connectionProxy;
     }
 
     protected abstract DataSource determineDataSource();
@@ -32,7 +50,16 @@ public abstract class AbstractRoutingDataSource extends AbstractDataSource {
 
     @Override
     public Connection getConnection(String username, String password) throws SQLException {
-        return determineDataSource().getConnection(username, password);
+        String xid = TransactionalContext.getXID();
+        if (StringUtils.isEmpty(xid)) {
+            return   determineDataSource().getConnection();
+        }else{
+            //进行连接代理
+            String ds = DataSourceContextHolder.peek();
+            ds = StringUtils.isEmpty(ds) ? "default" : ds;
+            ConnectionProxy connection = ConnectionFactory.getConnection(ds);
+            return connection == null ? getConnectionProxy(ds, determineDataSource().getConnection(username,password)) : connection;
+        }
     }
 
     protected DataSource getDataSource(String dbKey) {

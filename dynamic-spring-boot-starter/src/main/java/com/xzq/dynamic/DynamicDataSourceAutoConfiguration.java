@@ -4,6 +4,8 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import com.xzq.dynamic.aop.DsAspect;
 import com.xzq.dynamic.aop.advisor.DsAdvice;
 import com.xzq.dynamic.aop.advisor.DynamicDataSourceAdvisor;
+import com.xzq.dynamic.aop.advisor.TransactionalAdvisor;
+import com.xzq.dynamic.aop.advisor.TxAdvice;
 import com.xzq.dynamic.core.DynamicRoutingDataSource;
 import com.xzq.dynamic.creator.DefaultDataSourceCreator;
 import com.xzq.dynamic.spring.DataSourceProperty;
@@ -16,7 +18,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 import java.util.Map;
@@ -29,7 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Version 1.0.0
  **/
 @EnableConfigurationProperties(DynamicProperties.class)
-@AutoConfigureBefore(value = DataSourceAutoConfiguration.class,name = "com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure")
+@AutoConfigureBefore(value = DruidDataSourceAutoConfigure.class,name = "com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure")
 @Import(DynamicDataSourceCreatorAutoConfiguration.class)
 public class DynamicDataSourceAutoConfiguration implements InitializingBean {
 
@@ -46,6 +48,12 @@ public class DynamicDataSourceAutoConfiguration implements InitializingBean {
         DsAdvice dsAdvice = new DsAdvice();
         DynamicDataSourceAdvisor advisor = new DynamicDataSourceAdvisor(dsAdvice);
         return advisor;
+    }
+
+    @Bean
+    public TransactionalAdvisor transactionalAdvisor() {
+        TxAdvice txAdvice = new TxAdvice();
+       return new TransactionalAdvisor(txAdvice);
     }
 
 //    @Bean
