@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 
 public class DsAdvice implements MethodInterceptor {
 
-    private Logger logger = LoggerFactory.getLogger(DsAspect.class);
+    private Logger logger = LoggerFactory.getLogger(DsAdvice.class);
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
