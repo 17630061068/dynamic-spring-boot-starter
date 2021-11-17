@@ -27,10 +27,6 @@ import java.lang.reflect.Proxy;
  **/
 public class TransactionalAdvisor extends AbstractPointcutAdvisor {
 
-//    @Override
-//    public int getOrder() {
-//        return Integer.MAX_VALUE - 2;
-//    }
 
     private Pointcut pointcut;
     private Advice advice;

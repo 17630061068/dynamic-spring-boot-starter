@@ -11,7 +11,6 @@ import org.springframework.aop.support.ComposablePointcut;
 import org.springframework.aop.support.StaticMethodMatcher;
 import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
 import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.core.annotation.Order;
 import org.springframework.util.Assert;
 
 import java.lang.annotation.Annotation;
@@ -21,11 +20,13 @@ import java.lang.reflect.Proxy;
 public class DynamicDataSourceAdvisor extends AbstractPointcutAdvisor {
     private Pointcut pointcut;
     private Advice advice;
-//    @Override
-//    public int getOrder() {
-//        return Integer.MAX_VALUE - 1;
-//    }
-    public DynamicDataSourceAdvisor( Advice advice) {
+
+    @Override
+    public int getOrder() {
+        return Integer.MAX_VALUE-1;
+    }
+
+    public DynamicDataSourceAdvisor(Advice advice) {
         this.advice = advice;
         this.pointcut = builderPointCut();
     }

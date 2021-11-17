@@ -8,17 +8,15 @@ import com.xzq.dynamic.aop.advisor.TransactionalAdvisor;
 import com.xzq.dynamic.aop.advisor.TxAdvice;
 import com.xzq.dynamic.core.DynamicRoutingDataSource;
 import com.xzq.dynamic.creator.DefaultDataSourceCreator;
-import com.xzq.dynamic.spring.DataSourceProperty;
+import com.xzq.dynamic.logo.DynamicLogo;
 import com.xzq.dynamic.spring.DynamicProperties;
 import org.springframework.aop.Advisor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 import java.util.Map;
@@ -54,6 +52,11 @@ public class DynamicDataSourceAutoConfiguration implements InitializingBean {
     public TransactionalAdvisor transactionalAdvisor() {
         TxAdvice txAdvice = new TxAdvice();
        return new TransactionalAdvisor(txAdvice);
+    }
+
+    @Bean
+    public DynamicLogo logo() {
+        return new DynamicLogo();
     }
 
 //    @Bean
